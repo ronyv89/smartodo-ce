@@ -1,12 +1,12 @@
-import { fileURLToPath } from "url";
-import { dirname, resolve } from "path";
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   turbopack: {
-    root: resolve(__dirname, "../../"),
+    root: resolve(__dirname, '../../'),
   },
 };
 
