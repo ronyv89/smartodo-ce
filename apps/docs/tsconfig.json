@@ -6,7 +6,8 @@
       "@/*": ["./*"]
     },
     "declaration": false,
-    "declarationMap": false
+    "declarationMap": false,
+    "types": ["@testing-library/jest-dom"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", ".source"]

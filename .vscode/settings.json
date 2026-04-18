@@ -1,6 +1,10 @@
 {
   "js/ts.tsdk.path": "node_modules\\typescript\\lib",
 
+  // Jest extension: run from root using projects config
+  "jest.rootPath": ".",
+  "jest.jestCommandLine": "node node_modules/jest/bin/jest.js",
+
   // Prettier as default formatter
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
