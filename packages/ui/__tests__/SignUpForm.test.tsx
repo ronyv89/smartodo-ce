@@ -19,23 +19,33 @@ Object.defineProperty(window, 'matchMedia', {
 
 describe('SignUpForm Component', () => {
   it('renders correctly', () => {
-    const { container } = render(<SignUpForm />);
+    render(<SignUpForm />);
     expect(screen.getAllByText(/Sign Up/i)[0]).toBeInTheDocument();
   });
 
   it('toggles password visibility in signup context', () => {
     const { container } = render(<SignUpForm />);
-    const toggleSpans = container.querySelectorAll('span.cursor-pointer');
-    if (toggleSpans.length > 0) {
-       fireEvent.click(toggleSpans[0]); // toggles on
-       fireEvent.click(toggleSpans[0]); // toggles off
-    }
+
+    const passwordInput = container.querySelector('input[type="password"]') as HTMLInputElement;
+    expect(passwordInput).toBeInTheDocument();
+
+    const toggleSpan = container.querySelector('span.cursor-pointer') as HTMLElement;
+    expect(toggleSpan).toBeInTheDocument();
+
+    fireEvent.click(toggleSpan); // toggles on — password becomes text
+    expect(container.querySelector('input[type="text"]')).toBeInTheDocument();
+
+    fireEvent.click(toggleSpan); // toggles off — back to password
+    expect(container.querySelector('input[type="password"]')).toBeInTheDocument();
   });
 
   it('toggles terms checkbox', () => {
-    render(<SignUpForm />);
-    // Just click something near checkbox
-    const termsText = screen.getByText(/Terms and Conditions/i);
-    fireEvent.click(termsText);
+    const { container } = render(<SignUpForm />);
+    const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
+    expect(checkbox).toBeInTheDocument();
+    expect(checkbox.checked).toBe(false);
+
+    fireEvent.click(checkbox);
+    expect(checkbox.checked).toBe(true);
   });
 });

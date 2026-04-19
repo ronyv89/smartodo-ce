@@ -8,9 +8,9 @@ describe('Badge Component', () => {
     expect(screen.getByText('Default Badge')).toBeInTheDocument();
   });
 
-  it('renders with dot', () => {
-    render(<Badge dot>Dot Badge</Badge>);
-    expect(screen.getByText('Dot Badge')).toBeInTheDocument();
+  it('renders with solid variant', () => {
+    render(<Badge variant="solid">Solid Badge</Badge>);
+    expect(screen.getByText('Solid Badge')).toBeInTheDocument();
   });
 
   it('renders different variants', () => {

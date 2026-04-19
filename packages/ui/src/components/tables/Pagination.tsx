@@ -1,3 +1,5 @@
+import React from "react";
+
 type PaginationProps = {
   currentPage: number;
   totalPages: number;

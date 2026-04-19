@@ -1,12 +1,11 @@
-// @ts-nocheck
 "use client";
 import React from "react";
-
 import { ApexOptions } from "apexcharts";
-
 import dynamic from "next/dynamic";
+import type { Props as ApexProps } from "react-apexcharts";
 // Dynamically import the ReactApexChart component
-const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ReactApexChart = dynamic<ApexProps>(() => import("react-apexcharts") as any, {
   ssr: false,
 });
 

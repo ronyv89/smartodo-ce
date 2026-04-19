@@ -1,15 +1,15 @@
-// @ts-nocheck
 "use client";
 // import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-
 import dynamic from "next/dynamic";
+import type { Props as ApexProps } from "react-apexcharts";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { MoreDotIcon } from '@repo/ui/icons';
 import { useState } from "react";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 // Dynamically import the ReactApexChart component
-const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ReactApexChart = dynamic<ApexProps>(() => import("react-apexcharts") as any, {
   ssr: false,
 });
 

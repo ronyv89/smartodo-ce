@@ -2,7 +2,7 @@
 import { useTheme } from '@repo/ui/context/ThemeContext';
 import React from "react";
 
-export default function ThemeTogglerTwo({ title }: { title?: string }) {
+export default function ThemeTogglerTwo() {
   const { toggleTheme } = useTheme();
   return (
     <button
