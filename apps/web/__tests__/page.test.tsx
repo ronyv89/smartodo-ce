@@ -1,36 +1,12 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import Home from '../app/page';
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: ({
-    alt,
-    priority: _priority,
-    ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement> & { alt: string; priority?: boolean }) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img alt={alt} {...props} />
-  ),
-}));
-
-jest.mock('@repo/ui/button', () => ({
-  Button: ({ children }: { children: React.ReactNode }) => <button>{children}</button>,
-}));
-
-describe('Home page', () => {
-  it('renders the getting started instruction', () => {
+describe('Web App Tests', () => {
+  it('renders the generic landing page', () => {
     render(<Home />);
-    expect(screen.getByText(/Get started by editing/)).toBeInTheDocument();
-  });
-
-  it('renders the deploy and docs links', () => {
-    render(<Home />);
-    expect(screen.getByText('Deploy now')).toBeInTheDocument();
-    expect(screen.getByText('Read our docs')).toBeInTheDocument();
-  });
-
-  it('renders the open alert button', () => {
-    render(<Home />);
-    expect(screen.getByRole('button', { name: 'Open alert' })).toBeInTheDocument();
+    expect(screen.getByText('smartodo-ce')).toBeInTheDocument();
+    expect(screen.getByText(/Your Next\.js dashboard is ready/i)).toBeInTheDocument();
   });
 });

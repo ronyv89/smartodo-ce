@@ -9,6 +9,9 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
 
+  // Disable unknown CSS at-rules validation for Tailwind directives (e.g. @theme, @apply)
+  "css.lint.unknownAtRules": "ignore",
+
   // ESLint auto-fix on save
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
