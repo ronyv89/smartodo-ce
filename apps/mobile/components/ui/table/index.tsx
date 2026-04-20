@@ -111,23 +111,23 @@ const TableFooter = React.forwardRef<
 });
 
 const TableHead = React.forwardRef<
-  React.ComponentRef<typeof View | typeof Text>,
+  React.ComponentRef<typeof View> | React.ComponentRef<typeof Text>,
   ITableHeadProps
 >(function TableHead({ useRNView = false, className, ...props }, ref) {
   if (useRNView) {
     return (
       <View
-        ref={ref}
+        ref={ref as React.Ref<React.ComponentRef<typeof View>>}
         className={tableHeadStyle({ class: className })}
-        {...props}
+        {...(props as React.ComponentProps<typeof View>)}
       />
     );
   } else {
     return (
       <Text
-        ref={ref}
+        ref={ref as React.Ref<React.ComponentRef<typeof Text>>}
         className={tableHeadStyle({ class: className })}
-        {...props}
+        {...(props as React.ComponentProps<typeof Text>)}
       />
     );
   }
@@ -154,23 +154,23 @@ const TableRow = React.forwardRef<
 });
 
 const TableData = React.forwardRef<
-  React.ComponentRef<typeof View | typeof Text>,
+  React.ComponentRef<typeof View> | React.ComponentRef<typeof Text>,
   ITableDataProps
 >(function TableData({ useRNView = false, className, ...props }, ref) {
   if (useRNView) {
     return (
       <View
-        ref={ref}
+        ref={ref as React.Ref<React.ComponentRef<typeof View>>}
         className={tableDataStyle({ class: className })}
-        {...props}
+        {...(props as React.ComponentProps<typeof View>)}
       />
     );
   } else {
     return (
       <Text
-        ref={ref}
+        ref={ref as React.Ref<React.ComponentRef<typeof Text>>}
         className={tableDataStyle({ class: className })}
-        {...props}
+        {...(props as React.ComponentProps<typeof Text>)}
       />
     );
   }

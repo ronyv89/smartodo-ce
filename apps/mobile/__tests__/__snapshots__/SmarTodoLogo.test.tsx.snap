@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SmarTodoLogo SVG matches snapshot 1`] = `
+<View
+  testID="svg"
+>
+  <View>
+    <View>
+      smar
+    </View>
+    <View>
+      TODO
+    </View>
+  </View>
+</View>
+`;
