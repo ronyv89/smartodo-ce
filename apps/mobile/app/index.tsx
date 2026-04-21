@@ -7,7 +7,7 @@ import SmarTodoLogo from '@/assets/icons/SmarTodoLogo';
 export default function LandingPage() {
   return (
     <Box className="flex-1 bg-background-0 items-center justify-center px-8">
-      <Box className="items-center gap-3 mb-16">
+      <Box testID="landing-logo-container" className="items-center gap-3 mb-16">
         <SmarTodoLogo />
         <Text className="text-typography-500 text-base text-center mt-2">
           Smart task management, simplified.
@@ -16,6 +16,7 @@ export default function LandingPage() {
 
       <Box className="w-full gap-4">
         <Button
+          testID="signup-button"
           size="xl"
           className="bg-primary-500 rounded-xl w-full"
         >
@@ -23,6 +24,7 @@ export default function LandingPage() {
         </Button>
 
         <Button
+          testID="login-button"
           size="xl"
           variant="outline"
           className="rounded-xl w-full border-primary-500"
