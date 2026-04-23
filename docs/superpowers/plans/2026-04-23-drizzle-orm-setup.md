@@ -38,7 +38,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - ./data:/var/lib/postgresql     # PG18+ PGDATA lives at /var/lib/postgresql/<major>/docker
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U smartodo -d smartodo']
       interval: 5s
