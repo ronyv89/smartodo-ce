@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(yarn workspace * run check-types)",
+      "Bash(yarn workspace * run lint)",
+      "Bash(yarn workspace * run test)",
+      "Bash(yarn workspace * run test:coverage)",
+      "Bash(yarn workspace * run build)",
+      "Bash(yarn check-types)",
+      "Bash(yarn lint)",
+      "Bash(yarn test)",
+      "Bash(yarn format:check)",
+      "Bash(yarn format)",
+      "Bash(npx turbo run *)",
+      "Bash(npx turbo *--filter=*)",
+      "Bash(yarn dlx turbo *)",
+      "Bash(yarn exec turbo *)",
+      "Bash(yarn workspaces list*)",
+      "Bash(yarn info *)",
+      "Bash(yarn why *)",
+      "Bash(node --version)",
+      "Bash(yarn --version)"
+    ]
+  }
+}
