@@ -6,6 +6,7 @@ const config: Config = {
   testEnvironment: 'node',
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
+    '^@repo/db$': '<rootDir>/../../packages/db/src/index.ts',
   },
   transform: {
     '^.+\\.tsx?$': [
