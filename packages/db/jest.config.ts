@@ -1,12 +1,11 @@
 import type { Config } from 'jest';
 
 const config: Config = {
-  displayName: 'api',
+  displayName: 'db',
   preset: 'ts-jest',
   testEnvironment: 'node',
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
-    '^@repo/db$': '<rootDir>/../../packages/db/src/index.ts',
   },
   transform: {
     '^.+\\.tsx?$': [
@@ -19,7 +18,7 @@ const config: Config = {
       },
     ],
   },
-  collectCoverageFrom: ['src/**/*.ts', '!src/server.ts'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/bin/**'],
   coverageThreshold: {
     global: {
       branches: 100,

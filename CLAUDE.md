@@ -17,6 +17,7 @@ Default to Sonnet 4.6 (`/model sonnet`) unless the task is architectural or cros
 | `apps/mobile` | Expo app (iOS/Android/web) | Expo 54, expo-router, Gluestack UI, NativeWind, Detox | `apps/mobile/CLAUDE.md` |
 | `apps/docs` | Docs site (port 3001) | Next 15, Fumadocs MDX | `apps/docs/CLAUDE.md` |
 | `packages/ui` | Shared React dashboard components | React 19, Tailwind, ApexCharts, FullCalendar | `packages/ui/CLAUDE.md` |
+| `packages/db` | Shared Drizzle ORM schema + migrations | drizzle-orm, pg, drizzle-kit | `packages/db/CLAUDE.md` |
 | `packages/eslint-config` | Shared ESLint config | — | — |
 | `packages/typescript-config` | Shared tsconfigs | — | — |
 
@@ -35,7 +36,22 @@ npx turbo run <task> --filter=<name>     # task = build, lint, check-types, test
 yarn build | yarn lint | yarn check-types | yarn test | yarn format
 ```
 
-Workspace names: `@repo/api`, `web`, `mobile`, `docs`, `@repo/ui`.
+Workspace names: `@repo/api`, `web`, `mobile`, `docs`, `@repo/ui`, `@repo/db`.
+
+## Local database
+
+Postgres runs via Docker outside this repo at
+`/home/ronyv/Develop/Projects/docker-images/smartodo-ce/postgres/`. Start it
+with `docker compose up -d` from that folder. Connection string:
+`postgresql://smartodo:smartodo_dev@localhost:5432/smartodo` — already set in
+the `.env.example` files for `apps/api` and `packages/db`.
+
+Schema + migrations live in `@repo/db`. To add a migration:
+
+```sh
+yarn workspace @repo/db db:generate <meaningful_name>   # emits <ms-timestamp>_<name>.sql
+yarn workspace @repo/db db:migrate                      # applies pending migrations
+```
 
 ## Superpowers skills
 
