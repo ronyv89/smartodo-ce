@@ -123,8 +123,9 @@ Added to `apps/api/.env` and `.env.example`:
 | `JWT_REFRESH_SECRET` | 64-char random hex | `change_me_refresh_secret` |
 | `JWT_ACCESS_EXPIRES_IN` | `15m` | `15m` |
 | `JWT_REFRESH_EXPIRES_IN` | `7d` | `7d` |
+| `CORS_ORIGIN` | `http://localhost:3000` | `http://localhost:3000` |
 
-`parseApiEnv` in `apps/api/src/config/env.ts` is extended to validate and expose these four values. Both secrets are required (no default); missing either throws at startup.
+`parseApiEnv` in `apps/api/src/config/env.ts` is extended to validate and expose these five values. Both secrets are required (no default); missing either throws at startup. `CORS_ORIGIN` defaults to `http://localhost:3000` if omitted.
 
 ## File Structure
 
@@ -176,12 +177,51 @@ Declared via Fastify's type augmentation in `plugins/authenticate.ts`. Future RB
 
 Fastify's built-in JSON schema validation handles request shape errors. Auth-specific errors are thrown with `fastify.httpErrors` (via `@fastify/sensible`).
 
+## Cross-Platform Compatibility
+
+The API is consumed by two clients with different constraints:
+
+| Client | Transport | Token storage | CORS needed |
+|---|---|---|---|
+| `apps/web` (Next.js, port 3000) | `fetch` with `Authorization: Bearer` header | `localStorage` or in-memory | Yes — origin `http://localhost:3000` |
+| `apps/mobile` (Expo/React Native) | `fetch` with `Authorization: Bearer` header | Expo `SecureStore` | No (native HTTP, no browser) |
+
+**No cookies are used anywhere.** Both clients receive tokens in JSON response bodies and send them as Bearer headers. This is the only approach that works uniformly across browser and native.
+
+**CORS:** `@fastify/cors` is registered in `app.ts` with `origin: process.env.CORS_ORIGIN` (default `http://localhost:3000` for local dev). An `ALLOWED_ORIGINS` env var (comma-separated) will be added alongside the JWT vars for production flexibility. The Expo web build (which runs in a browser at port 8081) also gets included in local dev config.
+
+**Refresh token flow** is identical on both clients: POST the raw refresh token in the request body, receive a new token pair in the response.
+
 ## Testing
 
-- Each route handler has a Jest test using `app.inject()` — no real server, no real DB.
-- DB calls are mocked at the `db` singleton level.
-- `lib/tokens.ts`, `lib/password.ts`, and `lib/crypto.ts` are unit-tested independently.
-- Coverage target: 100% statements/branches/functions/lines (matching existing `@repo/db` standard).
+### Unit tests
+
+Pure function tests with no DB or HTTP. Stored in `src/lib/__tests__/`.
+
+| File | What is tested |
+|---|---|
+| `lib/tokens.test.ts` | `signAccessToken`, `signRefreshToken`, `verifyAccessToken`, `verifyRefreshToken` — valid tokens, expired tokens, wrong secret |
+| `lib/password.test.ts` | `hashPassword` + `verifyPassword` — correct password passes, wrong password fails |
+| `lib/crypto.test.ts` | `sha256Hash` — deterministic output, hex format |
+
+### Route tests (mocked DB)
+
+Use `app.inject()` against a Fastify instance with the `db` singleton mocked at module level. Fast, no DB required, cover all happy paths and error branches for each endpoint. Stored in `src/__tests__/auth/`.
+
+One test file per route: `register.test.ts`, `login.test.ts`, `refresh.test.ts`, `logout.test.ts`, `forgot-password.test.ts`, `reset-password.test.ts`, `me.test.ts`.
+
+### Integration tests (real DB)
+
+Test the full HTTP → handler → Postgres flow against a real test database. Validate that Drizzle queries, unique constraints, and cascade deletes work as designed.
+
+- **Test database:** same Docker Postgres instance, separate database `smartodo_test`. Created once; each test suite truncates relevant tables in `beforeEach`.
+- **Location:** `src/__tests__/integration/auth.integration.test.ts`
+- **Coverage:** full register → login → refresh → me → logout lifecycle, duplicate email conflict, expired token rejection, used reset token rejection.
+- **Not run in CI by default** unless `INTEGRATION_TEST=true` is set — keeps fast unit test suite unblocked when DB is unavailable.
+
+### Coverage target
+
+100% statements / branches / functions / lines on all non-integration source files (matching existing `@repo/db` standard). Integration tests are excluded from the coverage threshold.
 
 ## Future Extension Points
 
