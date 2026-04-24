@@ -4,6 +4,8 @@ const config: Config = {
   displayName: 'api',
   preset: 'ts-jest',
   testEnvironment: 'node',
+  setupFiles: ['<rootDir>/src/__tests__/setup.ts'],
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/src/__tests__/setup\\.ts$'],
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     '^@repo/db$': '<rootDir>/../../packages/db/src/index.ts',
@@ -19,7 +21,12 @@ const config: Config = {
       },
     ],
   },
-  collectCoverageFrom: ['src/**/*.ts', '!src/server.ts'],
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/server.ts',
+    '!src/__tests__/setup.ts',
+    '!src/__tests__/integration/**',
+  ],
   coverageThreshold: {
     global: {
       branches: 100,
