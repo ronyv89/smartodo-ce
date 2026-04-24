@@ -32,10 +32,7 @@ yarn workspace @repo/api lint
 
 ## Database
 
-- Local Postgres runs outside the repo at
-  `/home/ronyv/Develop/Projects/docker-images/smartodo-ce/postgres/`
-  (`docker compose up -d` there to start).
-- Copy `.env.example` → `.env` to configure `PORT` and `DATABASE_URL`.
+- Local Postgres runs via Docker; copy `.env.example` → `.env` to configure `PORT` and `DATABASE_URL`.
 - `src/db.ts` exports a module-level `{ db, pool }` built via `@repo/db`'s
   `createDb`. Import it only from modules that actually need the database —
   importing it anywhere opens a pg pool at module-load time.

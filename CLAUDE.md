@@ -40,9 +40,7 @@ Workspace names: `@repo/api`, `web`, `mobile`, `docs`, `@repo/ui`, `@repo/db`.
 
 ## Local database
 
-Postgres runs via Docker outside this repo at
-`/home/ronyv/Develop/Projects/docker-images/smartodo-ce/postgres/`. Start it
-with `docker compose up -d` from that folder. Connection string:
+Postgres runs via Docker. Connection string:
 `postgresql://smartodo:smartodo_dev@localhost:5432/smartodo` — already set in
 the `.env.example` files for `apps/api` and `packages/db`.
 
